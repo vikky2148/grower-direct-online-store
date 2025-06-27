@@ -4,13 +4,13 @@ import { Button } from '@/components/ui/button';
 
 const categories = [
   'All Products',
-  'Vegetables',
-  'Fruits',
-  'Dairy',
-  'Herbs & Spices',
-  'Grains',
-  'Meat & Poultry',
-  'Bakery'
+  'Women\'s Clothing',
+  'Men\'s Clothing',
+  'Accessories',
+  'Shoes',
+  'Bags',
+  'Jewelry',
+  'Sale'
 ];
 
 const CategoryFilter = () => {
@@ -26,7 +26,7 @@ const CategoryFilter = () => {
               variant={activeCategory === category ? "default" : "outline"}
               size="sm"
               onClick={() => setActiveCategory(category)}
-              className={activeCategory === category ? "bg-green-600 hover:bg-green-700" : ""}
+              className={activeCategory === category ? "bg-blue-600 hover:bg-blue-700" : ""}
             >
               {category}
             </Button>

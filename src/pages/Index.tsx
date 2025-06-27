@@ -4,7 +4,6 @@ import Header from '@/components/Header';
 import Hero from '@/components/Hero';
 import CategoryFilter from '@/components/CategoryFilter';
 import ProductGrid from '@/components/ProductGrid';
-import FarmerSpotlight from '@/components/FarmerSpotlight';
 import Footer from '@/components/Footer';
 
 const Index = () => {
@@ -14,7 +13,6 @@ const Index = () => {
       <Hero />
       <CategoryFilter />
       <ProductGrid />
-      <FarmerSpotlight />
       <Footer />
     </div>
   );
