@@ -3,30 +3,36 @@ import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 
 const categories = [
-  'All Products',
-  'Women\'s Clothing',
-  'Men\'s Clothing',
-  'Accessories',
-  'Shoes',
-  'Bags',
-  'Jewelry',
-  'Sale'
+  'Fires',
+  'Filter',
+  'Color',
+  'Adios',
+  'Seast',
+  'Pollst',
+  'Hotary',
+  'Price',
+  'Update',
+  'Category'
 ];
 
 const CategoryFilter = () => {
-  const [activeCategory, setActiveCategory] = useState('All Products');
+  const [activeCategory, setActiveCategory] = useState('Fires');
 
   return (
-    <div className="bg-white border-b py-4">
+    <div className="bg-blue-600 text-white py-3">
       <div className="container mx-auto px-4">
-        <div className="flex flex-wrap gap-2">
+        <div className="flex flex-wrap gap-1">
           {categories.map((category) => (
             <Button
               key={category}
-              variant={activeCategory === category ? "default" : "outline"}
+              variant={activeCategory === category ? "secondary" : "ghost"}
               size="sm"
               onClick={() => setActiveCategory(category)}
-              className={activeCategory === category ? "bg-blue-600 hover:bg-blue-700" : ""}
+              className={
+                activeCategory === category 
+                  ? "bg-white text-blue-600 hover:bg-gray-100" 
+                  : "text-white hover:bg-blue-700 border-none"
+              }
             >
               {category}
             </Button>
