@@ -1,52 +1,103 @@
 
-import React from 'react';
-import { ShoppingCart, Search, Menu, User, Heart } from 'lucide-react';
+import React, { useState } from 'react';
+import { ShoppingCart, Search, Menu, User, Heart, Bell } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 const Header = () => {
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+
   return (
-    <header className="bg-white shadow-sm border-b sticky top-0 z-50">
-      <div className="container mx-auto px-4 py-3">
+    <header className="bg-white/95 backdrop-blur-md shadow-sm border-b sticky top-0 z-50 transition-all duration-300">
+      <div className="container mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
           {/* Logo */}
           <div className="flex items-center">
-            <h1 className="text-2xl font-bold text-gray-900 tracking-tight">LUNKER.</h1>
+            <div className="relative">
+              <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent tracking-tight">
+                NEXUS
+              </h1>
+              <div className="absolute -top-1 -right-1 w-2 h-2 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full animate-pulse"></div>
+            </div>
+          </div>
+
+          {/* Search Bar - Desktop */}
+          <div className="hidden lg:flex items-center flex-1 max-w-xl mx-8">
+            <div className="relative w-full">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+              <input
+                type="text"
+                placeholder="Search for anything..."
+                className="w-full pl-10 pr-4 py-3 bg-gray-50 border-0 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300"
+              />
+            </div>
           </div>
 
           {/* Navigation Menu - Desktop */}
           <nav className="hidden lg:flex items-center space-x-8">
-            <div className="flex items-center space-x-6">
-              <span className="text-gray-700 hover:text-blue-600 cursor-pointer font-medium">Lom</span>
-              <span className="text-gray-700 hover:text-blue-600 cursor-pointer font-medium">Denter</span>
-              <span className="text-gray-700 hover:text-blue-600 cursor-pointer font-medium">Cnrets</span>
-              <span className="text-gray-700 hover:text-blue-600 cursor-pointer font-medium">Liptios</span>
-              <span className="text-gray-700 hover:text-blue-600 cursor-pointer font-medium">Spys</span>
-              <span className="text-gray-700 hover:text-blue-600 cursor-pointer font-medium">Arik</span>
-            </div>
+            <span className="text-gray-700 hover:text-blue-600 cursor-pointer font-medium transition-all duration-300 hover:scale-105">
+              Collections
+            </span>
+            <span className="text-gray-700 hover:text-blue-600 cursor-pointer font-medium transition-all duration-300 hover:scale-105">
+              Trending
+            </span>
+            <span className="text-gray-700 hover:text-blue-600 cursor-pointer font-medium transition-all duration-300 hover:scale-105">
+              Brands
+            </span>
+            <span className="text-gray-700 hover:text-blue-600 cursor-pointer font-medium transition-all duration-300 hover:scale-105">
+              Sale
+            </span>
           </nav>
 
           {/* Actions */}
-          <div className="flex items-center space-x-4">
-            <Button variant="ghost" size="icon" className="hidden md:flex">
+          <div className="flex items-center space-x-3">
+            <Button variant="ghost" size="icon" className="lg:hidden" onClick={() => setIsSearchOpen(!isSearchOpen)}>
               <Search className="h-5 w-5" />
             </Button>
-            <Button variant="ghost" size="icon">
-              <User className="h-5 w-5" />
-            </Button>
-            <Button variant="ghost" size="icon">
-              <Heart className="h-5 w-5" />
-            </Button>
-            <Button variant="ghost" size="icon" className="relative">
-              <ShoppingCart className="h-5 w-5" />
-              <span className="absolute -top-2 -right-2 bg-blue-600 text-white rounded-full text-xs w-5 h-5 flex items-center justify-center">
-                0
+            
+            <Button variant="ghost" size="icon" className="relative hover:bg-blue-50 transition-colors">
+              <Bell className="h-5 w-5" />
+              <span className="absolute -top-1 -right-1 bg-red-500 text-white rounded-full text-xs w-4 h-4 flex items-center justify-center">
+                2
               </span>
             </Button>
+            
+            <Button variant="ghost" size="icon" className="hover:bg-blue-50 transition-colors">
+              <User className="h-5 w-5" />
+            </Button>
+            
+            <Button variant="ghost" size="icon" className="relative hover:bg-pink-50 transition-colors">
+              <Heart className="h-5 w-5" />
+              <span className="absolute -top-1 -right-1 bg-pink-500 text-white rounded-full text-xs w-4 h-4 flex items-center justify-center">
+                3
+              </span>
+            </Button>
+            
+            <Button variant="ghost" size="icon" className="relative hover:bg-green-50 transition-colors">
+              <ShoppingCart className="h-5 w-5" />
+              <span className="absolute -top-1 -right-1 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-full text-xs w-5 h-5 flex items-center justify-center animate-bounce">
+                5
+              </span>
+            </Button>
+            
             <Button variant="ghost" size="icon" className="lg:hidden">
               <Menu className="h-5 w-5" />
             </Button>
           </div>
         </div>
+        
+        {/* Mobile Search */}
+        {isSearchOpen && (
+          <div className="lg:hidden mt-4 animate-fade-in">
+            <div className="relative">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+              <input
+                type="text"
+                placeholder="Search for anything..."
+                className="w-full pl-10 pr-4 py-3 bg-gray-50 border-0 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+            </div>
+          </div>
+        )}
       </div>
     </header>
   );
