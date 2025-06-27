@@ -90,7 +90,9 @@ const ProductGrid = () => {
       <div className="container mx-auto px-4">
         <div className="flex justify-between items-center mb-8">
           <div>
-            <h2 className="text-2xl font-bold text-gray-900 mb-2">Plants > Calate Jakket</h2>
+            <h2 className="text-2xl font-bold text-gray-900 mb-2">
+              Plants <span className="text-gray-400">{'>'}</span> Calate Jakket
+            </h2>
             <p className="text-gray-600">Discover our latest collection</p>
           </div>
           <div className="text-right">
