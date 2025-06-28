@@ -17,6 +17,12 @@ const categories = [
 const CategoryFilter = () => {
   const [activeCategory, setActiveCategory] = useState('All');
 
+  const handleCategoryClick = (categoryName: string) => {
+    setActiveCategory(categoryName);
+    console.log('Selected category:', categoryName);
+    // Here you would typically filter products based on the selected category
+  };
+
   return (
     <div className="bg-white border-b shadow-sm">
       <div className="container mx-auto px-4 py-6">
@@ -41,7 +47,7 @@ const CategoryFilter = () => {
               key={category.name}
               variant={activeCategory === category.name ? "default" : "outline"}
               size="lg"
-              onClick={() => setActiveCategory(category.name)}
+              onClick={() => handleCategoryClick(category.name)}
               className={`
                 relative overflow-hidden transition-all duration-300 hover:scale-105
                 ${activeCategory === category.name 

@@ -2,9 +2,12 @@
 import React, { useState } from 'react';
 import { ShoppingCart, Search, Menu, User, Heart, Bell } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { useApp } from '@/contexts/AppContext';
+import CartDrawer from './CartDrawer';
 
 const Header = () => {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const { getCartItemsCount, wishlist } = useApp();
 
   return (
     <header className="bg-white/95 backdrop-blur-md shadow-sm border-b sticky top-0 z-50 transition-all duration-300">
@@ -67,17 +70,23 @@ const Header = () => {
             
             <Button variant="ghost" size="icon" className="relative hover:bg-pink-50 transition-colors">
               <Heart className="h-5 w-5" />
-              <span className="absolute -top-1 -right-1 bg-pink-500 text-white rounded-full text-xs w-4 h-4 flex items-center justify-center">
-                3
-              </span>
+              {wishlist.length > 0 && (
+                <span className="absolute -top-1 -right-1 bg-pink-500 text-white rounded-full text-xs w-4 h-4 flex items-center justify-center">
+                  {wishlist.length}
+                </span>
+              )}
             </Button>
             
-            <Button variant="ghost" size="icon" className="relative hover:bg-green-50 transition-colors">
-              <ShoppingCart className="h-5 w-5" />
-              <span className="absolute -top-1 -right-1 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-full text-xs w-5 h-5 flex items-center justify-center animate-bounce">
-                5
-              </span>
-            </Button>
+            <CartDrawer>
+              <Button variant="ghost" size="icon" className="relative hover:bg-green-50 transition-colors">
+                <ShoppingCart className="h-5 w-5" />
+                {getCartItemsCount() > 0 && (
+                  <span className="absolute -top-1 -right-1 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-full text-xs w-5 h-5 flex items-center justify-center animate-bounce">
+                    {getCartItemsCount()}
+                  </span>
+                )}
+              </Button>
+            </CartDrawer>
             
             <Button variant="ghost" size="icon" className="lg:hidden">
               <Menu className="h-5 w-5" />
