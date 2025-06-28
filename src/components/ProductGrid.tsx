@@ -90,10 +90,10 @@ const sampleProducts = [
 ];
 
 const ProductGrid = () => {
-  const [viewMode, setViewMode] = useState('grid');
+  const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
 
   return (
-    <section className="py-12 bg-gray-50/50">
+    <section className="py-12 bg-gradient-to-br from-indigo-50 via-white to-purple-50">
       <div className="container mx-auto px-4">
         <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center mb-8 space-y-4 lg:space-y-0">
           <div>
@@ -104,46 +104,54 @@ const ProductGrid = () => {
               <span>{'>'}</span>
               <span className="text-gray-900 font-medium">Premium Fashion</span>
             </nav>
-            <h2 className="text-3xl font-bold text-gray-900 mb-2">
+            <h2 className="text-4xl font-bold bg-gradient-to-r from-gray-900 via-purple-900 to-indigo-900 bg-clip-text text-transparent mb-2">
               Premium Collection
             </h2>
-            <p className="text-gray-600">Discover our curated selection of luxury fashion pieces</p>
+            <p className="text-gray-600 text-lg">Discover our curated selection of luxury fashion pieces crafted with excellence</p>
           </div>
           
           <div className="flex items-center space-x-4">
-            <div className="flex items-center space-x-2 bg-white rounded-lg p-1 shadow-sm">
+            <div className="flex items-center space-x-1 bg-white/80 backdrop-blur-sm rounded-2xl p-1 shadow-lg border border-white/20">
               <Button
                 variant={viewMode === 'grid' ? 'default' : 'ghost'}
                 size="sm"
                 onClick={() => setViewMode('grid')}
-                className="p-2"
+                className={`p-3 rounded-xl transition-all duration-300 ${
+                  viewMode === 'grid' 
+                    ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg' 
+                    : 'hover:bg-gray-100'
+                }`}
               >
-                <Grid className="h-4 w-4" />
+                <Grid className="h-5 w-5" />
               </Button>
               <Button
                 variant={viewMode === 'list' ? 'default' : 'ghost'}
                 size="sm"
                 onClick={() => setViewMode('list')}
-                className="p-2"
+                className={`p-3 rounded-xl transition-all duration-300 ${
+                  viewMode === 'list' 
+                    ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg' 
+                    : 'hover:bg-gray-100'
+                }`}
               >
-                <List className="h-4 w-4" />
+                <List className="h-5 w-5" />
               </Button>
             </div>
             
-            <Button variant="outline" className="hidden md:flex items-center space-x-2">
+            <Button variant="outline" className="hidden md:flex items-center space-x-2 bg-white/80 backdrop-blur-sm border-white/20 hover:bg-white/90 rounded-xl px-4 py-2">
               <SlidersHorizontal className="h-4 w-4" />
               <span>Sort by</span>
             </Button>
             
-            <div className="text-right">
+            <div className="text-right bg-white/60 backdrop-blur-sm rounded-xl p-3 border border-white/20">
               <p className="text-sm text-gray-500">Showing Results</p>
-              <p className="font-semibold text-gray-900">{sampleProducts.length} Products</p>
+              <p className="font-bold text-gray-900 text-lg">{sampleProducts.length} Products</p>
             </div>
           </div>
         </div>
         
         <div className={`
-          grid gap-6 
+          grid gap-8 
           ${viewMode === 'grid' 
             ? 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4' 
             : 'grid-cols-1'
@@ -154,10 +162,10 @@ const ProductGrid = () => {
           ))}
         </div>
         
-        <div className="text-center mt-12">
+        <div className="text-center mt-16">
           <Button 
             size="lg" 
-            className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-8 py-3 rounded-full shadow-lg hover:shadow-xl transition-all duration-300"
+            className="bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 hover:from-blue-700 hover:via-purple-700 hover:to-pink-700 text-white px-12 py-4 rounded-2xl shadow-2xl hover:shadow-3xl transition-all duration-500 transform hover:scale-105 text-lg font-semibold"
           >
             Load More Products
           </Button>
