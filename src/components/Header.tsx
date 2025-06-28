@@ -3,11 +3,23 @@ import React, { useState } from 'react';
 import { ShoppingCart, Search, Menu, User, Heart, Bell } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useApp } from '@/contexts/AppContext';
+import { Link, useNavigate } from 'react-router-dom';
 import CartDrawer from './CartDrawer';
 
 const Header = () => {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
   const { getCartItemsCount, wishlist } = useApp();
+  const navigate = useNavigate();
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (searchQuery.trim()) {
+      console.log('Searching for:', searchQuery);
+      // Navigate to search results or filter products
+      navigate(`/?search=${encodeURIComponent(searchQuery)}`);
+    }
+  };
 
   return (
     <header className="bg-white/95 backdrop-blur-md shadow-sm border-b sticky top-0 z-50 transition-all duration-300">
@@ -15,34 +27,36 @@ const Header = () => {
         <div className="flex items-center justify-between">
           {/* Logo */}
           <div className="flex items-center">
-            <div className="relative">
+            <Link to="/" className="relative">
               <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent tracking-tight">
                 NEXUS
               </h1>
               <div className="absolute -top-1 -right-1 w-2 h-2 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full animate-pulse"></div>
-            </div>
+            </Link>
           </div>
 
           {/* Search Bar - Desktop */}
           <div className="hidden lg:flex items-center flex-1 max-w-xl mx-8">
-            <div className="relative w-full">
+            <form onSubmit={handleSearch} className="relative w-full">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
               <input
                 type="text"
                 placeholder="Search for anything..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
                 className="w-full pl-10 pr-4 py-3 bg-gray-50 border-0 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300"
               />
-            </div>
+            </form>
           </div>
 
           {/* Navigation Menu - Desktop */}
           <nav className="hidden lg:flex items-center space-x-8">
-            <span className="text-gray-700 hover:text-blue-600 cursor-pointer font-medium transition-all duration-300 hover:scale-105">
+            <Link to="/collections" className="text-gray-700 hover:text-blue-600 cursor-pointer font-medium transition-all duration-300 hover:scale-105">
               Collections
-            </span>
-            <span className="text-gray-700 hover:text-blue-600 cursor-pointer font-medium transition-all duration-300 hover:scale-105">
+            </Link>
+            <Link to="/trending" className="text-gray-700 hover:text-blue-600 cursor-pointer font-medium transition-all duration-300 hover:scale-105">
               Trending
-            </span>
+            </Link>
             <span className="text-gray-700 hover:text-blue-600 cursor-pointer font-medium transition-all duration-300 hover:scale-105">
               Brands
             </span>
@@ -97,14 +111,16 @@ const Header = () => {
         {/* Mobile Search */}
         {isSearchOpen && (
           <div className="lg:hidden mt-4 animate-fade-in">
-            <div className="relative">
+            <form onSubmit={handleSearch} className="relative">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
               <input
                 type="text"
                 placeholder="Search for anything..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
                 className="w-full pl-10 pr-4 py-3 bg-gray-50 border-0 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
-            </div>
+            </form>
           </div>
         )}
       </div>

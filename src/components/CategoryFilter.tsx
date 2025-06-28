@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Filter, ChevronDown } from 'lucide-react';
 
@@ -14,13 +14,15 @@ const categories = [
   { name: 'Sale', count: 150, color: 'from-red-500 to-pink-500' },
 ];
 
-const CategoryFilter = () => {
-  const [activeCategory, setActiveCategory] = useState('All');
+interface CategoryFilterProps {
+  activeCategory: string;
+  onCategoryChange: (category: string) => void;
+}
 
+const CategoryFilter: React.FC<CategoryFilterProps> = ({ activeCategory, onCategoryChange }) => {
   const handleCategoryClick = (categoryName: string) => {
-    setActiveCategory(categoryName);
+    onCategoryChange(categoryName);
     console.log('Selected category:', categoryName);
-    // Here you would typically filter products based on the selected category
   };
 
   return (
