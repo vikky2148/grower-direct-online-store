@@ -1,9 +1,30 @@
-
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { ArrowRight, Star, Zap } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { useToast } from '@/hooks/use-toast';
 
 const Hero = () => {
+  const navigate = useNavigate();
+  const { toast } = useToast();
+
+  const handleExploreCollection = () => {
+    console.log('Explore Collection clicked');
+    navigate('/collections');
+    toast({
+      title: "Explore Collection",
+      description: "Welcome to our curated fashion collections!",
+    });
+  };
+
+  const handleWatchLookbook = () => {
+    console.log('Watch Lookbook clicked');
+    toast({
+      title: "Watch Lookbook",
+      description: "Lookbook video feature coming soon!",
+    });
+  };
+
   return (
     <section className="relative bg-gradient-to-br from-slate-50 via-blue-50 to-purple-50 overflow-hidden">
       {/* Animated Background Elements */}
@@ -39,12 +60,21 @@ const Hero = () => {
             </div>
             
             <div className="flex flex-col sm:flex-row gap-4">
-              <Button size="lg" className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-8 py-4 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 group">
+              <Button 
+                size="lg" 
+                className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-8 py-4 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 group"
+                onClick={handleExploreCollection}
+              >
                 Explore Collection
                 <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
               </Button>
               
-              <Button variant="outline" size="lg" className="border-gray-300 text-gray-700 hover:bg-gray-50 px-8 py-4 rounded-full transition-all duration-300 hover:scale-105">
+              <Button 
+                variant="outline" 
+                size="lg" 
+                className="border-gray-300 text-gray-700 hover:bg-gray-50 px-8 py-4 rounded-full transition-all duration-300 hover:scale-105"
+                onClick={handleWatchLookbook}
+              >
                 Watch Lookbook
               </Button>
             </div>

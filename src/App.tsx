@@ -8,6 +8,8 @@ import { AppProvider } from "@/contexts/AppContext";
 import Index from "./pages/Index";
 import Collections from "./pages/Collections";
 import Trending from "./pages/Trending";
+import Brands from "./pages/Brands";
+import Sale from "./pages/Sale";
 import Auth from "./pages/Auth";
 import NotFound from "./pages/NotFound";
 
@@ -24,6 +26,8 @@ const App = () => (
             <Route path="/" element={<Index />} />
             <Route path="/collections" element={<Collections />} />
             <Route path="/trending" element={<Trending />} />
+            <Route path="/brands" element={<Brands />} />
+            <Route path="/sale" element={<Sale />} />
             <Route path="/auth" element={<Auth />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />

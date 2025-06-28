@@ -38,6 +38,10 @@ const Header = () => {
     if (searchQuery.trim()) {
       console.log('Searching for:', searchQuery);
       navigate(`/?search=${encodeURIComponent(searchQuery)}`);
+      toast({
+        title: "Search",
+        description: `Searching for "${searchQuery}"`,
+      });
     }
   };
 
@@ -48,13 +52,19 @@ const Header = () => {
 
   const handleNotificationClick = () => {
     console.log('Notifications clicked');
-    // Add notification functionality here
+    toast({
+      title: "Notifications",
+      description: "You have 2 new notifications",
+    });
   };
 
   const handleUserClick = () => {
     if (user) {
       console.log('User profile clicked');
-      // Add user profile functionality here
+      toast({
+        title: "Profile",
+        description: "User profile feature coming soon!",
+      });
     } else {
       console.log('Redirecting to login');
       navigate('/auth');
@@ -85,12 +95,36 @@ const Header = () => {
 
   const handleWishlistClick = () => {
     console.log('Wishlist clicked');
-    // Add wishlist page navigation here
+    toast({
+      title: "Wishlist",
+      description: `You have ${wishlist.length} items in your wishlist`,
+    });
+  };
+
+  const handleBrandsClick = () => {
+    console.log('Brands clicked');
+    toast({
+      title: "Brands",
+      description: "Explore our premium brand collection",
+    });
+    // Navigate to a brands page or show brands modal
+  };
+
+  const handleSaleClick = () => {
+    console.log('Sale clicked');
+    toast({
+      title: "Sale",
+      description: "Check out our amazing deals and discounts!",
+    });
+    // Navigate to a sale page or filter products on sale
   };
 
   const handleMenuClick = () => {
     console.log('Mobile menu clicked');
-    // Add mobile menu functionality here
+    toast({
+      title: "Menu",
+      description: "Mobile menu feature coming soon!",
+    });
   };
 
   return (
@@ -139,13 +173,13 @@ const Header = () => {
             </Link>
             <button 
               className="text-gray-700 hover:text-blue-600 cursor-pointer font-medium transition-all duration-300 hover:scale-105"
-              onClick={() => console.log('Brands clicked')}
+              onClick={handleBrandsClick}
             >
               Brands
             </button>
             <button 
               className="text-gray-700 hover:text-blue-600 cursor-pointer font-medium transition-all duration-300 hover:scale-105"
-              onClick={() => console.log('Sale clicked')}
+              onClick={handleSaleClick}
             >
               Sale
             </button>

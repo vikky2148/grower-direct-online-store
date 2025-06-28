@@ -2,8 +2,38 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { ArrowRight, Sparkles, Zap } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { useToast } from '@/hooks/use-toast';
 
 const FeaturedSection = () => {
+  const navigate = useNavigate();
+  const { toast } = useToast();
+
+  const handleShopCollection = () => {
+    console.log('Shop Collection clicked');
+    navigate('/collections');
+    toast({
+      title: "Shop Collection",
+      description: "Browse our exclusive designer collection!",
+    });
+  };
+
+  const handleViewLookbook = () => {
+    console.log('View Lookbook clicked');
+    toast({
+      title: "View Lookbook",
+      description: "Lookbook feature coming soon!",
+    });
+  };
+
+  const handleViewProduct = (productName: string) => {
+    console.log(`View ${productName} clicked`);
+    toast({
+      title: "Product Details",
+      description: `${productName} details coming soon!`,
+    });
+  };
+
   return (
     <section className="py-20 bg-gradient-to-br from-slate-900 via-blue-900 to-purple-900 relative overflow-hidden">
       {/* Animated Background */}
@@ -45,6 +75,7 @@ const FeaturedSection = () => {
               <Button 
                 size="lg" 
                 className="bg-white text-gray-900 hover:bg-gray-100 px-8 py-4 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 group"
+                onClick={handleShopCollection}
               >
                 Shop Collection
                 <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
@@ -54,6 +85,7 @@ const FeaturedSection = () => {
                 variant="outline" 
                 size="lg" 
                 className="border-white/30 text-white hover:bg-white/10 px-8 py-4 rounded-full backdrop-blur-sm transition-all duration-300"
+                onClick={handleViewLookbook}
               >
                 View Lookbook
               </Button>
@@ -91,14 +123,22 @@ const FeaturedSection = () => {
                 <p className="text-gray-300 text-sm mb-4">Limited Edition Piece</p>
                 <div className="flex items-center justify-between">
                   <span className="text-2xl font-bold text-white">$599</span>
-                  <Button size="sm" variant="outline" className="border-white/30 text-white hover:bg-white/10">
+                  <Button 
+                    size="sm" 
+                    variant="outline" 
+                    className="border-white/30 text-white hover:bg-white/10"
+                    onClick={() => handleViewProduct('Signature Dress')}
+                  >
                     View
                   </Button>
                 </div>
               </div>
               
               {/* Secondary Items */}
-              <div className="bg-white/5 backdrop-blur-md rounded-2xl p-6 border border-white/10 hover:bg-white/10 transition-all duration-500">
+              <div 
+                className="bg-white/5 backdrop-blur-md rounded-2xl p-6 border border-white/10 hover:bg-white/10 transition-all duration-500 cursor-pointer"
+                onClick={() => handleViewProduct('Premium Blazer')}
+              >
                 <div className="aspect-square bg-gradient-to-br from-white/10 to-white/5 rounded-xl flex items-center justify-center mb-4">
                   <div className="text-3xl">👔</div>
                 </div>
@@ -106,7 +146,10 @@ const FeaturedSection = () => {
                 <p className="text-gray-400 text-xs">$299</p>
               </div>
               
-              <div className="bg-white/5 backdrop-blur-md rounded-2xl p-6 border border-white/10 hover:bg-white/10 transition-all duration-500">
+              <div 
+                className="bg-white/5 backdrop-blur-md rounded-2xl p-6 border border-white/10 hover:bg-white/10 transition-all duration-500 cursor-pointer"
+                onClick={() => handleViewProduct('Designer Heels')}
+              >
                 <div className="aspect-square bg-gradient-to-br from-white/10 to-white/5 rounded-xl flex items-center justify-center mb-4">
                   <div className="text-3xl">👠</div>
                 </div>
