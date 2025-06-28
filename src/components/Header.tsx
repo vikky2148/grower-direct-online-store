@@ -1,16 +1,37 @@
 
-import React, { useState } from 'react';
-import { ShoppingCart, Search, Menu, User, Heart, Bell } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { ShoppingCart, Search, Menu, User, Heart, Bell, LogOut } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useApp } from '@/contexts/AppContext';
 import { Link, useNavigate } from 'react-router-dom';
+import { supabase } from '@/integrations/supabase/client';
+import { useToast } from '@/hooks/use-toast';
 import CartDrawer from './CartDrawer';
 
 const Header = () => {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+  const [user, setUser] = useState(null);
   const { getCartItemsCount, wishlist } = useApp();
   const navigate = useNavigate();
+  const { toast } = useToast();
+
+  useEffect(() => {
+    // Get initial session
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setUser(session?.user ?? null);
+    });
+
+    // Listen for auth changes
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(
+      (event, session) => {
+        setUser(session?.user ?? null);
+        console.log('Auth state changed:', event, session?.user?.email);
+      }
+    );
+
+    return () => subscription.unsubscribe();
+  }, []);
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -31,8 +52,35 @@ const Header = () => {
   };
 
   const handleUserClick = () => {
-    console.log('User profile clicked');
-    // Add user profile functionality here
+    if (user) {
+      console.log('User profile clicked');
+      // Add user profile functionality here
+    } else {
+      console.log('Redirecting to login');
+      navigate('/auth');
+    }
+  };
+
+  const handleLogout = async () => {
+    console.log('Logout clicked');
+    try {
+      const { error } = await supabase.auth.signOut();
+      if (error) {
+        toast({
+          title: "Logout Failed",
+          description: error.message,
+          variant: "destructive",
+        });
+      } else {
+        toast({
+          title: "Logged Out",
+          description: "You have been logged out successfully.",
+        });
+        navigate('/');
+      }
+    } catch (error) {
+      console.error('Logout error:', error);
+    }
   };
 
   const handleWishlistClick = () => {
@@ -129,14 +177,37 @@ const Header = () => {
               </span>
             </Button>
             
-            <Button 
-              variant="ghost" 
-              size="icon" 
-              className="hover:bg-blue-50 transition-colors" 
-              onClick={handleUserClick}
-            >
-              <User className="h-5 w-5" />
-            </Button>
+            {user ? (
+              <div className="flex items-center space-x-2">
+                <Button 
+                  variant="ghost" 
+                  size="icon" 
+                  className="hover:bg-blue-50 transition-colors" 
+                  onClick={handleUserClick}
+                >
+                  <User className="h-5 w-5" />
+                </Button>
+                <Button 
+                  variant="ghost" 
+                  size="icon" 
+                  className="hover:bg-red-50 transition-colors text-red-600" 
+                  onClick={handleLogout}
+                  title="Logout"
+                >
+                  <LogOut className="h-5 w-5" />
+                </Button>
+              </div>
+            ) : (
+              <Link to="/auth">
+                <Button 
+                  variant="outline" 
+                  size="sm"
+                  className="hover:bg-blue-50 transition-colors"
+                >
+                  Login
+                </Button>
+              </Link>
+            )}
             
             <Button 
               variant="ghost" 

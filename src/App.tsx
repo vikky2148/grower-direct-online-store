@@ -8,6 +8,7 @@ import { AppProvider } from "@/contexts/AppContext";
 import Index from "./pages/Index";
 import Collections from "./pages/Collections";
 import Trending from "./pages/Trending";
+import Auth from "./pages/Auth";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -23,6 +24,7 @@ const App = () => (
             <Route path="/" element={<Index />} />
             <Route path="/collections" element={<Collections />} />
             <Route path="/trending" element={<Trending />} />
+            <Route path="/auth" element={<Auth />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
