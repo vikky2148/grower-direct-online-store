@@ -181,9 +181,13 @@ const allProducts = [
 
 const ITEMS_PER_PAGE = 8;
 
-const ProductGrid = () => {
+interface ProductGridProps {
+  filterCategory?: string;
+}
+
+const ProductGrid: React.FC<ProductGridProps> = ({ filterCategory }) => {
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
-  const [activeCategory, setActiveCategory] = useState('All');
+  const [activeCategory, setActiveCategory] = useState(filterCategory || 'All');
   const [currentPage, setCurrentPage] = useState(1);
 
   const filteredProducts = useMemo(() => {
@@ -202,14 +206,23 @@ const ProductGrid = () => {
   const totalPages = Math.ceil(filteredProducts.length / ITEMS_PER_PAGE);
 
   const handleCategoryChange = (category: string) => {
+    console.log('Category changed to:', category);
     setActiveCategory(category);
-    setCurrentPage(1); // Reset to first page when category changes
+    setCurrentPage(1);
   };
 
   const handleLoadMore = () => {
     if (currentPage < totalPages) {
       setCurrentPage(currentPage + 1);
+      console.log('Loading more products, page:', currentPage + 1);
     }
+  };
+
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+    console.log('Page changed to:', page);
+    // Scroll to top when page changes
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   return (
@@ -237,7 +250,10 @@ const ProductGrid = () => {
               <Button
                 variant={viewMode === 'grid' ? 'default' : 'ghost'}
                 size="sm"
-                onClick={() => setViewMode('grid')}
+                onClick={() => {
+                  setViewMode('grid');
+                  console.log('View mode changed to grid');
+                }}
                 className={`p-3 rounded-xl transition-all duration-300 ${
                   viewMode === 'grid' 
                     ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg' 
@@ -249,7 +265,10 @@ const ProductGrid = () => {
               <Button
                 variant={viewMode === 'list' ? 'default' : 'ghost'}
                 size="sm"
-                onClick={() => setViewMode('list')}
+                onClick={() => {
+                  setViewMode('list');
+                  console.log('View mode changed to list');
+                }}
                 className={`p-3 rounded-xl transition-all duration-300 ${
                   viewMode === 'list' 
                     ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg' 
@@ -260,7 +279,11 @@ const ProductGrid = () => {
               </Button>
             </div>
             
-            <Button variant="outline" className="hidden md:flex items-center space-x-2 bg-white/80 backdrop-blur-sm border-white/20 hover:bg-white/90 rounded-xl px-4 py-2">
+            <Button 
+              variant="outline" 
+              className="hidden md:flex items-center space-x-2 bg-white/80 backdrop-blur-sm border-white/20 hover:bg-white/90 rounded-xl px-4 py-2"
+              onClick={() => console.log('Sort button clicked')}
+            >
               <SlidersHorizontal className="h-4 w-4" />
               <span>Sort by</span>
             </Button>
@@ -291,8 +314,8 @@ const ProductGrid = () => {
               <PaginationContent>
                 <PaginationItem>
                   <PaginationPrevious 
-                    onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
-                    className={currentPage === 1 ? 'pointer-events-none opacity-50' : 'cursor-pointer'}
+                    onClick={() => handlePageChange(Math.max(1, currentPage - 1))}
+                    className={currentPage === 1 ? 'pointer-events-none opacity-50' : 'cursor-pointer hover:bg-blue-50'}
                   />
                 </PaginationItem>
                 
@@ -306,9 +329,9 @@ const ProductGrid = () => {
                     return (
                       <PaginationItem key={page}>
                         <PaginationLink
-                          onClick={() => setCurrentPage(page)}
+                          onClick={() => handlePageChange(page)}
                           isActive={currentPage === page}
-                          className="cursor-pointer"
+                          className="cursor-pointer hover:bg-blue-50"
                         >
                           {page}
                         </PaginationLink>
@@ -320,8 +343,8 @@ const ProductGrid = () => {
                 
                 <PaginationItem>
                   <PaginationNext 
-                    onClick={() => setCurrentPage(Math.min(totalPages, currentPage + 1))}
-                    className={currentPage === totalPages ? 'pointer-events-none opacity-50' : 'cursor-pointer'}
+                    onClick={() => handlePageChange(Math.min(totalPages, currentPage + 1))}
+                    className={currentPage === totalPages ? 'pointer-events-none opacity-50' : 'cursor-pointer hover:bg-blue-50'}
                   />
                 </PaginationItem>
               </PaginationContent>
@@ -329,17 +352,18 @@ const ProductGrid = () => {
           </div>
         )}
         
-        {/* Load More Button (Alternative to pagination) */}
-        <div className="text-center mt-8">
-          <Button 
-            size="lg" 
-            onClick={handleLoadMore}
-            disabled={currentPage >= totalPages}
-            className="bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 hover:from-blue-700 hover:via-purple-700 hover:to-pink-700 text-white px-12 py-4 rounded-2xl shadow-2xl hover:shadow-3xl transition-all duration-500 transform hover:scale-105 text-lg font-semibold disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            {currentPage >= totalPages ? 'No More Products' : 'Load More Products'}
-          </Button>
-        </div>
+        {/* Load More Button */}
+        {currentPage < totalPages && (
+          <div className="text-center mt-8">
+            <Button 
+              size="lg" 
+              onClick={handleLoadMore}
+              className="bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 hover:from-blue-700 hover:via-purple-700 hover:to-pink-700 text-white px-12 py-4 rounded-2xl shadow-2xl hover:shadow-3xl transition-all duration-500 transform hover:scale-105 text-lg font-semibold"
+            >
+              Load More Products ({totalPages - currentPage} pages remaining)
+            </Button>
+          </div>
+        )}
       </div>
     </section>
   );

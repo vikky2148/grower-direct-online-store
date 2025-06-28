@@ -16,9 +16,33 @@ const Header = () => {
     e.preventDefault();
     if (searchQuery.trim()) {
       console.log('Searching for:', searchQuery);
-      // Navigate to search results or filter products
       navigate(`/?search=${encodeURIComponent(searchQuery)}`);
     }
+  };
+
+  const handleLogoClick = () => {
+    console.log('Logo clicked - navigating to home');
+    navigate('/');
+  };
+
+  const handleNotificationClick = () => {
+    console.log('Notifications clicked');
+    // Add notification functionality here
+  };
+
+  const handleUserClick = () => {
+    console.log('User profile clicked');
+    // Add user profile functionality here
+  };
+
+  const handleWishlistClick = () => {
+    console.log('Wishlist clicked');
+    // Add wishlist page navigation here
+  };
+
+  const handleMenuClick = () => {
+    console.log('Mobile menu clicked');
+    // Add mobile menu functionality here
   };
 
   return (
@@ -27,12 +51,12 @@ const Header = () => {
         <div className="flex items-center justify-between">
           {/* Logo */}
           <div className="flex items-center">
-            <Link to="/" className="relative">
+            <button onClick={handleLogoClick} className="relative cursor-pointer">
               <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent tracking-tight">
                 NEXUS
               </h1>
               <div className="absolute -top-1 -right-1 w-2 h-2 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full animate-pulse"></div>
-            </Link>
+            </button>
           </div>
 
           {/* Search Bar - Desktop */}
@@ -51,38 +75,75 @@ const Header = () => {
 
           {/* Navigation Menu - Desktop */}
           <nav className="hidden lg:flex items-center space-x-8">
-            <Link to="/collections" className="text-gray-700 hover:text-blue-600 cursor-pointer font-medium transition-all duration-300 hover:scale-105">
+            <Link 
+              to="/collections" 
+              className="text-gray-700 hover:text-blue-600 cursor-pointer font-medium transition-all duration-300 hover:scale-105"
+              onClick={() => console.log('Collections link clicked')}
+            >
               Collections
             </Link>
-            <Link to="/trending" className="text-gray-700 hover:text-blue-600 cursor-pointer font-medium transition-all duration-300 hover:scale-105">
+            <Link 
+              to="/trending" 
+              className="text-gray-700 hover:text-blue-600 cursor-pointer font-medium transition-all duration-300 hover:scale-105"
+              onClick={() => console.log('Trending link clicked')}
+            >
               Trending
             </Link>
-            <span className="text-gray-700 hover:text-blue-600 cursor-pointer font-medium transition-all duration-300 hover:scale-105">
+            <button 
+              className="text-gray-700 hover:text-blue-600 cursor-pointer font-medium transition-all duration-300 hover:scale-105"
+              onClick={() => console.log('Brands clicked')}
+            >
               Brands
-            </span>
-            <span className="text-gray-700 hover:text-blue-600 cursor-pointer font-medium transition-all duration-300 hover:scale-105">
+            </button>
+            <button 
+              className="text-gray-700 hover:text-blue-600 cursor-pointer font-medium transition-all duration-300 hover:scale-105"
+              onClick={() => console.log('Sale clicked')}
+            >
               Sale
-            </span>
+            </button>
           </nav>
 
           {/* Actions */}
           <div className="flex items-center space-x-3">
-            <Button variant="ghost" size="icon" className="lg:hidden" onClick={() => setIsSearchOpen(!isSearchOpen)}>
+            <Button 
+              variant="ghost" 
+              size="icon" 
+              className="lg:hidden" 
+              onClick={() => {
+                setIsSearchOpen(!isSearchOpen);
+                console.log('Search toggle clicked');
+              }}
+            >
               <Search className="h-5 w-5" />
             </Button>
             
-            <Button variant="ghost" size="icon" className="relative hover:bg-blue-50 transition-colors">
+            <Button 
+              variant="ghost" 
+              size="icon" 
+              className="relative hover:bg-blue-50 transition-colors" 
+              onClick={handleNotificationClick}
+            >
               <Bell className="h-5 w-5" />
               <span className="absolute -top-1 -right-1 bg-red-500 text-white rounded-full text-xs w-4 h-4 flex items-center justify-center">
                 2
               </span>
             </Button>
             
-            <Button variant="ghost" size="icon" className="hover:bg-blue-50 transition-colors">
+            <Button 
+              variant="ghost" 
+              size="icon" 
+              className="hover:bg-blue-50 transition-colors" 
+              onClick={handleUserClick}
+            >
               <User className="h-5 w-5" />
             </Button>
             
-            <Button variant="ghost" size="icon" className="relative hover:bg-pink-50 transition-colors">
+            <Button 
+              variant="ghost" 
+              size="icon" 
+              className="relative hover:bg-pink-50 transition-colors" 
+              onClick={handleWishlistClick}
+            >
               <Heart className="h-5 w-5" />
               {wishlist.length > 0 && (
                 <span className="absolute -top-1 -right-1 bg-pink-500 text-white rounded-full text-xs w-4 h-4 flex items-center justify-center">
@@ -102,7 +163,12 @@ const Header = () => {
               </Button>
             </CartDrawer>
             
-            <Button variant="ghost" size="icon" className="lg:hidden">
+            <Button 
+              variant="ghost" 
+              size="icon" 
+              className="lg:hidden" 
+              onClick={handleMenuClick}
+            >
               <Menu className="h-5 w-5" />
             </Button>
           </div>

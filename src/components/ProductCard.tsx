@@ -43,12 +43,13 @@ const ProductCard: React.FC<ProductCardProps> = (props) => {
 
   const handleQuickAdd = (e: React.MouseEvent) => {
     e.stopPropagation();
+    console.log('Adding to cart:', props.name);
     addToCart(props);
-    console.log('Added to cart:', props.name);
   };
 
   const handleToggleWishlist = (e: React.MouseEvent) => {
     e.stopPropagation();
+    console.log('Toggling wishlist for:', props.name);
     toggleWishlist(props.id);
   };
 
@@ -108,14 +109,14 @@ const ProductCard: React.FC<ProductCardProps> = (props) => {
               
               <div className="flex items-center space-x-2">
                 <ProductModal product={props}>
-                  <Button variant="outline" size="icon" className="rounded-full">
+                  <Button variant="outline" size="icon" className="rounded-full hover:bg-blue-50">
                     <Eye className="h-4 w-4" />
                   </Button>
                 </ProductModal>
                 <Button 
                   variant="outline" 
                   size="icon" 
-                  className={`rounded-full ${isLiked ? 'text-red-500 border-red-500' : ''}`}
+                  className={`rounded-full ${isLiked ? 'text-red-500 border-red-500 bg-red-50' : 'hover:bg-pink-50'}`}
                   onClick={handleToggleWishlist}
                 >
                   <Heart className={`h-4 w-4 ${isLiked ? 'fill-current' : ''}`} />
@@ -183,7 +184,7 @@ const ProductCard: React.FC<ProductCardProps> = (props) => {
               <Button 
                 variant="ghost" 
                 size="icon"
-                className="bg-white/90 backdrop-blur-sm hover:bg-white rounded-full shadow-lg text-gray-600"
+                className="bg-white/90 backdrop-blur-sm hover:bg-white rounded-full shadow-lg text-gray-600 transition-all duration-300"
               >
                 <Eye className="h-4 w-4" />
               </Button>
@@ -196,7 +197,7 @@ const ProductCard: React.FC<ProductCardProps> = (props) => {
             ${isHovered ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}
           `}>
             <Button 
-              className="w-full bg-white/20 backdrop-blur-sm hover:bg-white/30 text-white border border-white/30 rounded-full"
+              className="w-full bg-white/20 backdrop-blur-sm hover:bg-white/30 text-white border border-white/30 rounded-full transition-all duration-300"
               onClick={handleQuickAdd}
               disabled={!inStock}
             >
