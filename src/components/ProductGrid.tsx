@@ -89,7 +89,7 @@ const ProductGrid: React.FC<ProductGridProps> = ({ showOnSaleOnly = false }) => 
 
         {!showOnSaleOnly && (
           <CategoryFilter 
-            selectedCategory={selectedCategory}
+            activeCategory={selectedCategory}
             onCategoryChange={handleCategoryChange}
           />
         )}
