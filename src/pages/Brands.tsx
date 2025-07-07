@@ -6,7 +6,7 @@ import ProductGrid from '@/components/ProductGrid';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Star, MapPin, Award, Users, Crown, Verified, Heart, TrendingUp } from 'lucide-react';
+import { Star, MapPin, Award, Users, Crown, Verified, Heart, TrendingUp, Shield, Calendar, Package } from 'lucide-react';
 
 const Brands = () => {
   const [selectedBrand, setSelectedBrand] = useState('all');
@@ -25,7 +25,8 @@ const Brands = () => {
       established: '2020',
       tier: 'premium',
       followers: '50K+',
-      verified: true
+      verified: true,
+      discount: 0
     },
     { 
       id: 'fabindia',
@@ -39,7 +40,8 @@ const Brands = () => {
       established: '1960',
       tier: 'heritage',
       followers: '25K+',
-      verified: true
+      verified: true,
+      discount: 15
     },
     { 
       id: 'wforwoman',
@@ -53,7 +55,8 @@ const Brands = () => {
       established: '2001',
       tier: 'premium',
       followers: '18K+',
-      verified: true
+      verified: true,
+      discount: 25
     },
     { 
       id: 'biba',
@@ -67,7 +70,8 @@ const Brands = () => {
       established: '1988',
       tier: 'popular',
       followers: '32K+',
-      verified: true
+      verified: true,
+      discount: 30
     },
     { 
       id: 'anokhi',
@@ -81,7 +85,8 @@ const Brands = () => {
       established: '1970',
       tier: 'artisan',
       followers: '12K+',
-      verified: true
+      verified: true,
+      discount: 20
     },
     { 
       id: 'kalamkari',
@@ -95,7 +100,8 @@ const Brands = () => {
       established: '1995',
       tier: 'artisan',
       followers: '8K+',
-      verified: true
+      verified: true,
+      discount: 35
     },
   ];
 
@@ -111,6 +117,13 @@ const Brands = () => {
     { id: 'heritage', name: 'Heritage Brands', count: 6 },
     { id: 'premium', name: 'Premium', count: 12 },
     { id: 'artisan', name: 'Artisan', count: 7 }
+  ];
+
+  const brandBenefits = [
+    { icon: <Shield className="h-6 w-6 text-green-500" />, title: 'Authenticity Guarantee', description: 'All products are 100% authentic and verified' },
+    { icon: <Package className="h-6 w-6 text-blue-500" />, title: 'Free Shipping', description: 'Free delivery on orders above ₹999' },
+    { icon: <Heart className="h-6 w-6 text-red-500" />, title: 'Easy Returns', description: '30-day hassle-free return policy' },
+    { icon: <Award className="h-6 w-6 text-purple-500" />, title: 'Quality Assured', description: 'Rigorous quality checks before dispatch' }
   ];
 
   const getTierColor = (tier: string) => {
@@ -175,8 +188,26 @@ const Brands = () => {
         </div>
       </div>
 
+      {/* Brand Benefits */}
+      <div className="py-16 bg-gray-50">
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl font-bold text-center mb-12">Why Shop Our Partner Brands?</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {brandBenefits.map((benefit, index) => (
+              <div key={index} className="text-center p-6 bg-white rounded-xl shadow-sm hover:shadow-lg transition-shadow">
+                <div className="flex justify-center mb-4">
+                  {benefit.icon}
+                </div>
+                <h3 className="text-lg font-semibold mb-2">{benefit.title}</h3>
+                <p className="text-gray-600 text-sm">{benefit.description}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
       {/* Brand Category Filter */}
-      <div className="py-8 bg-gray-50">
+      <div className="py-8 bg-white">
         <div className="container mx-auto px-4">
           <div className="flex justify-center space-x-4 flex-wrap">
             {brandCategories.map((category) => (
@@ -197,7 +228,7 @@ const Brands = () => {
       </div>
 
       {/* Enhanced Brand Selection */}
-      <div className="py-20">
+      <div className="py-20 bg-gradient-to-br from-gray-50 to-blue-50">
         <div className="container mx-auto px-4">
           <h2 className="text-4xl font-bold text-center mb-16">Choose Your Favorite Brand</h2>
           
@@ -232,9 +263,14 @@ const Brands = () => {
                       <Badge className={getTierBadge(brand.tier).color}>
                         {getTierBadge(brand.tier).text}
                       </Badge>
+                      {brand.discount > 0 && (
+                        <Badge className="bg-red-500 text-white">
+                          {brand.discount}% OFF
+                        </Badge>
+                      )}
                     </div>
                     
-                    <div className="absolute bottom-4 left-4">
+                    <div className="absolute bottom-4 left-4 flex space-x-2">
                       <Badge className={`bg-gradient-to-r ${getTierColor(brand.tier)} text-white border-0 font-semibold`}>
                         Est. {brand.established}
                       </Badge>
@@ -309,6 +345,16 @@ const Brands = () => {
               <p className="text-gray-600 max-w-2xl mx-auto">
                 {brands.find(b => b.id === selectedBrand)?.description}
               </p>
+              <div className="mt-6 flex justify-center space-x-4">
+                <Badge className="bg-blue-100 text-blue-700 px-4 py-2">
+                  <Calendar className="h-4 w-4 mr-2" />
+                  Est. {brands.find(b => b.id === selectedBrand)?.established}
+                </Badge>
+                <Badge className="bg-green-100 text-green-700 px-4 py-2">
+                  <Package className="h-4 w-4 mr-2" />
+                  {brands.find(b => b.id === selectedBrand)?.products} Products
+                </Badge>
+              </div>
             </div>
           </div>
         </div>
