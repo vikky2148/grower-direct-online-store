@@ -7,9 +7,19 @@ import { useToast } from '@/hooks/use-toast';
 
 interface ProductGridProps {
   showOnSaleOnly?: boolean;
+  category?: string;
+  brand?: string;
+  discountRange?: string;
+  showTrendingBadge?: boolean;
 }
 
-const ProductGrid: React.FC<ProductGridProps> = ({ showOnSaleOnly = false }) => {
+const ProductGrid: React.FC<ProductGridProps> = ({ 
+  showOnSaleOnly = false, 
+  category = '',
+  brand = '',
+  discountRange = '',
+  showTrendingBadge = false
+}) => {
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [currentPage, setCurrentPage] = useState(1);
   const { toast } = useToast();
@@ -31,12 +41,29 @@ const ProductGrid: React.FC<ProductGridProps> = ({ showOnSaleOnly = false }) => 
     { id: '12', name: 'Ethnic Sandals', price: 2199, originalPrice: 2999, unit: 'pair', brand: 'Metro', location: 'Delhi', rating: 4.8, category: 'Shoes', inStock: true, image: 'https://images.unsplash.com/photo-1549298916-b41d501d3772?w=400&h=400&fit=crop', badge: 'Sale' },
   ];
 
-  // Filter products based on showOnSaleOnly prop
-  const baseProducts = showOnSaleOnly 
-    ? allProducts.filter(product => product.originalPrice && product.originalPrice > product.price)
-    : allProducts;
+  // Filter products based on props
+  const baseProducts = useMemo(() => {
+    let filtered = allProducts;
 
-  // Filter by selected category
+    // Filter by sale status
+    if (showOnSaleOnly) {
+      filtered = filtered.filter(product => product.originalPrice && product.originalPrice > product.price);
+    }
+
+    // Filter by category
+    if (category && category !== 'all') {
+      filtered = filtered.filter(product => product.category.toLowerCase() === category.toLowerCase());
+    }
+
+    // Filter by brand
+    if (brand && brand !== 'all') {
+      filtered = filtered.filter(product => product.brand.toLowerCase().includes(brand.toLowerCase()));
+    }
+
+    return filtered;
+  }, [showOnSaleOnly, category, brand]);
+
+  // Filter by selected category from CategoryFilter
   const filteredProducts = useMemo(() => {
     if (selectedCategory === 'All') {
       return baseProducts;
@@ -65,7 +92,7 @@ const ProductGrid: React.FC<ProductGridProps> = ({ showOnSaleOnly = false }) => 
 
   const handleCategoryChange = (category: string) => {
     setSelectedCategory(category);
-    setCurrentPage(1); // Reset to first page when category changes
+    setCurrentPage(1);
     toast({
       title: "Category Filter",
       description: category === 'All' ? 'Showing all products' : `Showing ${category} products`,
@@ -87,7 +114,7 @@ const ProductGrid: React.FC<ProductGridProps> = ({ showOnSaleOnly = false }) => 
           </p>
         </div>
 
-        {!showOnSaleOnly && (
+        {!showOnSaleOnly && !category && !brand && (
           <CategoryFilter 
             activeCategory={selectedCategory}
             onCategoryChange={handleCategoryChange}
@@ -96,13 +123,17 @@ const ProductGrid: React.FC<ProductGridProps> = ({ showOnSaleOnly = false }) => 
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 mb-12">
           {paginatedProducts.map((product) => (
-            <ProductCard key={product.id} {...product} />
+            <ProductCard 
+              key={product.id} 
+              {...product} 
+              badge={showTrendingBadge ? 'Trending' : product.badge}
+            />
           ))}
         </div>
 
         {filteredProducts.length === 0 && (
           <div className="text-center py-12">
-            <p className="text-gray-500 text-lg">No products found in this category.</p>
+            <p className="text-gray-500 text-lg">No products found matching your criteria.</p>
           </div>
         )}
 

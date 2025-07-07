@@ -1,11 +1,10 @@
-
 import React, { useState } from 'react';
 import Header from '@/components/Header';
 import ProductGrid from '@/components/ProductGrid';
 import Footer from '@/components/Footer';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent } from '@/components/ui/card';
-import { TrendingUp, Fire, Star, Clock } from 'lucide-react';
+import { TrendingUp, Flame, Star, Clock } from 'lucide-react';
 
 const Trending = () => {
   const [selectedPeriod, setSelectedPeriod] = useState('week');
@@ -18,7 +17,7 @@ const Trending = () => {
       description: 'This week'
     },
     {
-      icon: <Fire className="h-8 w-8 text-red-500" />,
+      icon: <Flame className="h-8 w-8 text-red-500" />,
       title: 'Hot Sellers',
       count: '180+',
       description: 'Items sold today'
@@ -60,7 +59,7 @@ const Trending = () => {
         <div className="container mx-auto px-4">
           <div className="text-center">
             <div className="flex items-center justify-center mb-4">
-              <Fire className="h-12 w-12 text-red-500 mr-3" />
+              <Flame className="h-12 w-12 text-red-500 mr-3" />
               <h1 className="text-5xl font-bold bg-gradient-to-r from-red-600 to-orange-600 bg-clip-text text-transparent">
                 Trending Now
               </h1>

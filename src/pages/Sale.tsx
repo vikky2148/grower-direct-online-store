@@ -6,7 +6,7 @@ import ProductGrid from '@/components/ProductGrid';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { Timer, Percent, Tag, Gift, Clock, Fire } from 'lucide-react';
+import { Timer, Percent, Tag, Gift, Clock, Flame } from 'lucide-react';
 
 const Sale = () => {
   const [selectedDiscount, setSelectedDiscount] = useState('all');
@@ -29,7 +29,7 @@ const Sale = () => {
 
   const saleHighlights = [
     {
-      icon: <Fire className="h-8 w-8 text-red-500" />,
+      icon: <Flame className="h-8 w-8 text-red-500" />,
       title: 'Flash Sale',
       subtitle: 'Limited Time Only',
       description: 'Up to 80% off on selected items',
@@ -67,7 +67,7 @@ const Sale = () => {
         <div className="container mx-auto px-4">
           <div className="text-center">
             <div className="flex items-center justify-center mb-4">
-              <Fire className="h-12 w-12 text-red-500 mr-3 animate-pulse" />
+              <Flame className="h-12 w-12 text-red-500 mr-3 animate-pulse" />
               <Badge variant="destructive" className="text-lg px-4 py-2 mb-4">
                 🔥 MEGA SALE
               </Badge>
