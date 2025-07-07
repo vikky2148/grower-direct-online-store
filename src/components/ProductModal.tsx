@@ -93,12 +93,12 @@ const ProductModal: React.FC<ProductModalProps> = ({ product, children }) => {
             </div>
             
             <div className="flex items-center space-x-3">
-              <span className="text-3xl font-bold text-gray-900">${product.price}</span>
+              <span className="text-3xl font-bold text-gray-900">₹{product.price}</span>
               {product.originalPrice && (
                 <>
-                  <span className="text-xl text-gray-500 line-through">${product.originalPrice}</span>
+                  <span className="text-xl text-gray-500 line-through">₹{product.originalPrice}</span>
                   <Badge className="bg-green-100 text-green-700">
-                    Save ${(product.originalPrice - product.price).toFixed(2)}
+                    Save ₹{(product.originalPrice - product.price)}
                   </Badge>
                 </>
               )}

@@ -15,20 +15,20 @@ const ProductGrid: React.FC<ProductGridProps> = ({ showOnSaleOnly = false }) => 
   const { toast } = useToast();
   const ITEMS_PER_PAGE = 8;
 
-  // Mock product data with more variety
+  // Indian product data with rupee pricing and local brands
   const allProducts = [
-    { id: '1', name: 'Premium Cotton T-Shirt', price: 29.99, originalPrice: 39.99, unit: 'piece', brand: 'Urban Style', location: 'New York', rating: 4.5, category: 'Clothing', inStock: true, image: '', badge: 'Sale' },
-    { id: '2', name: 'Designer Jeans', price: 89.99, originalPrice: 129.99, unit: 'piece', brand: 'Classic Couture', location: 'California', rating: 4.8, category: 'Clothing', inStock: true, image: '', badge: 'Sale' },
-    { id: '3', name: 'Leather Handbag', price: 159.99, unit: 'piece', brand: 'Luxury Brand', location: 'Milan', rating: 4.9, category: 'Accessories', inStock: true, image: '', badge: 'New' },
-    { id: '4', name: 'Running Sneakers', price: 79.99, originalPrice: 99.99, unit: 'pair', brand: 'Sport Pro', location: 'Oregon', rating: 4.6, category: 'Shoes', inStock: true, image: '', badge: 'Sale' },
-    { id: '5', name: 'Silk Scarf', price: 45.99, unit: 'piece', brand: 'Elite Fashion', location: 'Paris', rating: 4.7, category: 'Accessories', inStock: true, image: '', badge: 'Trending' },
-    { id: '6', name: 'Winter Coat', price: 199.99, originalPrice: 279.99, unit: 'piece', brand: 'Winter Wear', location: 'Canada', rating: 4.8, category: 'Clothing', inStock: true, image: '', badge: 'Sale' },
-    { id: '7', name: 'Smart Watch', price: 299.99, unit: 'piece', brand: 'Tech Style', location: 'Tokyo', rating: 4.5, category: 'Electronics', inStock: true, image: '', badge: 'New' },
-    { id: '8', name: 'Casual Dress', price: 69.99, originalPrice: 89.99, unit: 'piece', brand: 'Modern Chic', location: 'London', rating: 4.6, category: 'Clothing', inStock: true, image: '', badge: 'Sale' },
-    { id: '9', name: 'Sunglasses', price: 129.99, unit: 'piece', brand: 'Luxury Brand', location: 'Italy', rating: 4.7, category: 'Accessories', inStock: true, image: '', badge: 'Trending' },
-    { id: '10', name: 'Athletic Shorts', price: 34.99, originalPrice: 44.99, unit: 'piece', brand: 'Sport Pro', location: 'California', rating: 4.4, category: 'Clothing', inStock: true, image: '', badge: 'Sale' },
-    { id: '11', name: 'Formal Shirt', price: 59.99, unit: 'piece', brand: 'Classic Couture', location: 'New York', rating: 4.6, category: 'Clothing', inStock: true, image: '', badge: 'New' },
-    { id: '12', name: 'High Heels', price: 109.99, originalPrice: 149.99, unit: 'pair', brand: 'Elite Fashion', location: 'Paris', rating: 4.8, category: 'Shoes', inStock: true, image: '', badge: 'Sale' },
+    { id: '1', name: 'Premium Cotton Kurta', price: 1299, originalPrice: 1799, unit: 'piece', brand: 'Fabindia', location: 'Mumbai', rating: 4.5, category: 'Clothing', inStock: true, image: 'https://images.unsplash.com/photo-1583743814966-8936f37f820f?w=400&h=400&fit=crop', badge: 'Sale' },
+    { id: '2', name: 'Designer Saree', price: 3499, originalPrice: 4999, unit: 'piece', brand: 'Sabyasachi', location: 'Kolkata', rating: 4.8, category: 'Clothing', inStock: true, image: 'https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=400&h=400&fit=crop', badge: 'Sale' },
+    { id: '3', name: 'Leather Handbag', price: 5999, unit: 'piece', brand: 'Hidesign', location: 'Chennai', rating: 4.9, category: 'Accessories', inStock: true, image: 'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=400&h=400&fit=crop', badge: 'New' },
+    { id: '4', name: 'Sports Sneakers', price: 2799, originalPrice: 3499, unit: 'pair', brand: 'Campus', location: 'Delhi', rating: 4.6, category: 'Shoes', inStock: true, image: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400&h=400&fit=crop', badge: 'Sale' },
+    { id: '5', name: 'Silk Dupatta', price: 899, unit: 'piece', brand: 'Kalamkari', location: 'Hyderabad', rating: 4.7, category: 'Accessories', inStock: true, image: 'https://images.unsplash.com/photo-1594736797933-d0401ba2fe65?w=400&h=400&fit=crop', badge: 'Trending' },
+    { id: '6', name: 'Winter Shawl', price: 2199, originalPrice: 2999, unit: 'piece', brand: 'Pashmina House', location: 'Kashmir', rating: 4.8, category: 'Clothing', inStock: true, image: 'https://images.unsplash.com/photo-1544441893-675973e1d7fe?w=400&h=400&fit=crop', badge: 'Sale' },
+    { id: '7', name: 'Smart Watch', price: 12999, unit: 'piece', brand: 'boAt', location: 'Bengaluru', rating: 4.5, category: 'Electronics', inStock: true, image: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400&h=400&fit=crop', badge: 'New' },
+    { id: '8', name: 'Ethnic Kurti', price: 1599, originalPrice: 2199, unit: 'piece', brand: 'W for Woman', location: 'Pune', rating: 4.6, category: 'Clothing', inStock: true, image: 'https://images.unsplash.com/photo-1564257577-8a8d4c50c02c?w=400&h=400&fit=crop', badge: 'Sale' },
+    { id: '9', name: 'Traditional Juttis', price: 1799, unit: 'pair', brand: 'Needledust', location: 'Jaipur', rating: 4.7, category: 'Shoes', inStock: true, image: 'https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=400&h=400&fit=crop', badge: 'Trending' },
+    { id: '10', name: 'Cotton Palazzo', price: 799, originalPrice: 1199, unit: 'piece', brand: 'Global Desi', location: 'Mumbai', rating: 4.4, category: 'Clothing', inStock: true, image: 'https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=400&h=400&fit=crop', badge: 'Sale' },
+    { id: '11', name: 'Formal Shirt', price: 1299, unit: 'piece', brand: 'Peter England', location: 'Bengaluru', rating: 4.6, category: 'Clothing', inStock: true, image: 'https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?w=400&h=400&fit=crop', badge: 'New' },
+    { id: '12', name: 'Ethnic Sandals', price: 2199, originalPrice: 2999, unit: 'pair', brand: 'Metro', location: 'Delhi', rating: 4.8, category: 'Shoes', inStock: true, image: 'https://images.unsplash.com/photo-1549298916-b41d501d3772?w=400&h=400&fit=crop', badge: 'Sale' },
   ];
 
   // Filter products based on showOnSaleOnly prop
@@ -82,7 +82,7 @@ const ProductGrid: React.FC<ProductGridProps> = ({ showOnSaleOnly = false }) => 
           <p className="text-gray-600 max-w-2xl mx-auto">
             {showOnSaleOnly 
               ? 'Don\'t miss out on these amazing deals and discounts!'
-              : 'Discover our handpicked collection of premium fashion items from top brands around the world.'
+              : 'Discover our handpicked collection of premium Indian fashion items from top brands across India.'
             }
           </p>
         </div>

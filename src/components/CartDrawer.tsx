@@ -22,7 +22,7 @@ const CartDrawer: React.FC<CartDrawerProps> = ({ children }) => {
   const handleCheckout = () => {
     console.log('Processing checkout...', cart);
     console.log('Cart total:', getCartTotal());
-    alert(`Checkout initiated! Total: $${getCartTotal().toFixed(2)}\n\nThis would connect to your payment processor.`);
+    alert(`Checkout initiated! Total: ₹${getCartTotal().toFixed(2)}\n\nThis would connect to your payment processor.`);
   };
 
   const handleQuantityIncrease = (itemId: string, currentQuantity: number) => {
@@ -92,8 +92,8 @@ const CartDrawer: React.FC<CartDrawerProps> = ({ children }) => {
                 <div className="flex-1">
                   <h4 className="font-medium text-sm">{item.name}</h4>
                   <p className="text-xs text-gray-500">{item.brand}</p>
-                  <p className="font-bold text-sm">${item.price}</p>
-                  <p className="text-xs text-gray-500">Subtotal: ${(item.price * item.quantity).toFixed(2)}</p>
+                  <p className="font-bold text-sm">₹{item.price}</p>
+                  <p className="text-xs text-gray-500">Subtotal: ₹{(item.price * item.quantity).toFixed(2)}</p>
                 </div>
                 
                 <div className="flex items-center space-x-2">
@@ -132,13 +132,13 @@ const CartDrawer: React.FC<CartDrawerProps> = ({ children }) => {
           <div className="border-t pt-4">
             <div className="flex justify-between items-center mb-4">
               <span className="font-semibold">Total:</span>
-              <span className="font-bold text-lg">${getCartTotal().toFixed(2)}</span>
+              <span className="font-bold text-lg">₹{getCartTotal().toFixed(2)}</span>
             </div>
             <Button 
               className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700"
               onClick={handleCheckout}
             >
-              Proceed to Checkout (${getCartTotal().toFixed(2)})
+              Proceed to Checkout (₹{getCartTotal().toFixed(2)})
             </Button>
           </div>
         )}

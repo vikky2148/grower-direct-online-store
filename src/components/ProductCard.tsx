@@ -95,13 +95,13 @@ const ProductCard: React.FC<ProductCardProps> = (props) => {
                 </div>
                 
                 <div className="flex items-center space-x-3">
-                  <span className="text-2xl font-bold text-gray-900">${price}</span>
+                  <span className="text-2xl font-bold text-gray-900">₹{price}</span>
                   {originalPrice && (
-                    <span className="text-lg text-gray-500 line-through">${originalPrice}</span>
+                    <span className="text-lg text-gray-500 line-through">₹{originalPrice}</span>
                   )}
                   {originalPrice && (
                     <Badge variant="secondary" className="bg-green-100 text-green-700">
-                      Save ${(originalPrice - price).toFixed(2)}
+                      Save ₹{(originalPrice - price)}
                     </Badge>
                   )}
                 </div>
@@ -235,9 +235,9 @@ const ProductCard: React.FC<ProductCardProps> = (props) => {
           
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-2">
-              <span className="text-xl font-bold text-gray-900">${price}</span>
+              <span className="text-xl font-bold text-gray-900">₹{price}</span>
               {originalPrice && (
-                <span className="text-sm text-gray-500 line-through">${originalPrice}</span>
+                <span className="text-sm text-gray-500 line-through">₹{originalPrice}</span>
               )}
             </div>
             
